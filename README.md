@@ -23,7 +23,7 @@ Iterface - ISqlDbClient is also provided.
 ### How to use
 
 First create an instance of the SqlDbClient class and provide a valid connection string to properly initialise the client class.
-Call either get or execute methods and provide the query or stored procedure, command type and inputs. Inputs can be omitted if there are none and command type can be omitted if only retriving data from a table.
+Call either get or execute methods and provide the query or stored procedure, command type and inputs. 
+Inputs can be omitted if there are none and command type can also be omitted if only retriving data from a table.
 
-
-
+### Examples
