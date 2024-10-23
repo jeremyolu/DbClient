@@ -17,6 +17,8 @@ DbClient is a simple, lightweight and flexible package for interacting with vari
 The SqlDbClient class allows connections to Azure databases and SQL Server databases by providing a connection string to connect to the database server.
 The two main methods **Get** which gets rows from a table and **Execute** which executes queries/stored procedures on a table
 There are 2 command types - **Text** which is used when specifying raw SQL queries and **StoredProcedure** which is used for stored procedures.
+Synchronous and asynchronous methods are provided
+Iterface - ISqlDbClient is also provided.
 
 ### How to use
 
@@ -26,7 +28,8 @@ First create an instance of the SqlDbClient class and provide a valid connection
   // initialisation of client class with connection string
   var client = new SqlDbClient(@"Server=.server;Database=database;Trusted_Connection=True;TrustServerCertificate=True;");
 
-  // getting data from a table with just an SQL query - the method will return an IEnumerable of the type you specify in the delegate. 
+  // getting data from a table with just an SQL query - the method will return an 
+  // IEnumerable of the type you specify in the delegate. 
   // The example below shows courses being returned based on the created Course type
   var courses = await client.GetAsync("SELECT * FROM Courses", (reader) => new Course
   {
@@ -57,11 +60,17 @@ First create an instance of the SqlDbClient class and provide a valid connection
       Price = reader.Float("Price").Value
  }, CommandType.Text, inputs);
 
-  // getting courses using a stored procedure called "spGetCourses"
-  // This particular procedure has an input that filters courses price greater than 10 so 
-  // a input dictionairy is needed and is passed.
+  // getting courses using a stored procedure called "spGetFilteredCourses"
+  // This particular procedure has an input that filters courses where the price is
+  // greater than x number provided 
+  // a input dictionairy is needed and is passed to supply this.
   // If a procedure does not include an input, you can omit the inputs from the method.
-  var courses = await client.GetAsync("spGetCourses", (reader) => new Course
+    
+  var inputs = new Dictionary<string, object?>
+  {
+      { "Price", 30 }
+  };
+  var courses = await client.GetAsync("spGetFilteredCourses", (reader) => new Course
   {
       Id = reader.UniqueIdentifier("Id"),
       CourseId = reader.String("CourseId"),
