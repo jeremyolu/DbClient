@@ -70,5 +70,53 @@ namespace DbClient.Sql
 
             return rows;
         }
+
+        public bool Execute(string sql, CommandType type = CommandType.Text, Dictionary<string, object?>? inputs = null)
+        {
+            bool result = false;
+
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+
+            using var cmd = new SqlCommand(sql, conn) { CommandType = type };
+
+            if (inputs != null)
+            {
+                foreach (var input in inputs)
+                {
+                    cmd.Parameters.AddWithValue($"@{input.Key}", input.Value ?? DBNull.Value);
+                }
+            }
+
+            int affectedRows = cmd.ExecuteNonQuery();
+
+            result = affectedRows != 0;
+
+            return result;
+        }
+
+        public async Task<bool> ExecuteAsync(string sql, CommandType type = CommandType.Text, Dictionary<string, object?>? inputs = null)
+        {
+            bool result = false;
+
+            using var conn = new SqlConnection(_connectionString);
+            conn.OpenAsync();
+
+            using var cmd = new SqlCommand(sql, conn) { CommandType = type };
+
+            if (inputs != null)
+            {
+                foreach (var input in inputs)
+                {
+                    cmd.Parameters.AddWithValue($"@{input.Key}", input.Value ?? DBNull.Value);
+                }
+            }
+
+            int affectedRows = await cmd.ExecuteNonQueryAsync();
+
+            result = affectedRows != 0;
+
+            return result;
+        }
     }
 }

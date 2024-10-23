@@ -7,5 +7,7 @@ namespace DbClient.Interfaces
     {
         IEnumerable<T> Get<T>(string sql, Func<SqlDataReader, T> data, CommandType type = CommandType.Text, Dictionary<string, object?>? inputs = null);
         Task<IEnumerable<T>> GetAsync<T>(string sql, Func<SqlDataReader, T> data, CommandType type = CommandType.Text, Dictionary<string, object?>? inputs = null);
+        bool Execute(string sql, CommandType type = CommandType.Text, Dictionary<string, object?>? inputs = null);
+        Task<bool> ExecuteAsync(string sql, CommandType type = CommandType.Text, Dictionary<string, object?>? inputs = null);
     }
 }
