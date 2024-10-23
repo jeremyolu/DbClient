@@ -17,8 +17,8 @@ DbClient is a simple, lightweight and flexible package for interacting with vari
 The SqlDbClient class allows connections to Azure databases and SQL Server databases by providing a connection string to connect to the database server.
 The two main methods **Get** which gets rows from a table and **Execute** which executes queries/stored procedures on a table
 There are 2 command types - **Text** which is used when specifying raw SQL queries and **StoredProcedure** which is used for stored procedures.
-Synchronous and asynchronous methods are provided
-Iterface - ISqlDbClient is also provided.
+Synchronous and asynchronous methods are provided.
+ISqlDbClient type is also provided.
 
 ### How to use
 
