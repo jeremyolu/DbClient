@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace DbClient.Extensions
+namespace DbClient.Extensions.Sql
 {
     public static class Sql
     {
