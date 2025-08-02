@@ -1,4 +1,4 @@
-﻿namespace DbClient.Exceptions
+﻿namespace DbClient.Exceptions.Sql
 {
     public class InvalidConnectionStringException : Exception
     {

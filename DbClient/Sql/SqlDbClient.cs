@@ -1,4 +1,5 @@
 ﻿using DbClient.Exceptions;
+using DbClient.Exceptions.Sql;
 using DbClient.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -154,7 +155,7 @@ namespace DbClient.Sql
             bool result = false;
 
             using var conn = new SqlConnection(_connectionString);
-            conn.OpenAsync();
+            await conn.OpenAsync();
 
             using var cmd = new SqlCommand(sql, conn) { CommandType = type };
 

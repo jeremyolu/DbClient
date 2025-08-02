@@ -4,6 +4,13 @@ namespace DbClient.Extensions.Sql
 {
     public static class Sql
     {
+        public static T? Get<T>(this SqlDataReader reader, string column)
+        {
+            var index = reader.GetOrdinal(column);
+
+            return reader.IsDBNull(index) ? default : (T)reader.GetValue(index);
+        }
+
         public static int? Int(this SqlDataReader reader, string column)
         {
             int index = reader.GetOrdinal(column);
